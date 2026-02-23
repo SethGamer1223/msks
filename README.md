@@ -1,6 +1,9 @@
-# Modern Simple Krist Shop
+this is a fork of Modern Simple Krist Shop to add Kromer support for RCC
 
-This is a simple Krist shop that supports many different wallets and configurations.
+
+# Modern Simple Kromer Shop
+
+This is a simple Kromer shop that supports many different wallets and configurations.
 
 To install run `wget run https://raw.githubusercontent.com/MasonGulu/msks/main/install.lua` and edit the configuration files, then set this as your startup program.
 
