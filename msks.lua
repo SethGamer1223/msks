@@ -110,6 +110,7 @@ for k,v in ipairs(listings) do
 
   krist.subscribeAddress(v.sendTo)
 end
+krist.subscribeAddress(config.address)
 
 local f = fs.open("test.out","w")
 f.write(textutils.serialise(listings))
@@ -192,7 +193,7 @@ local function showErr(errorReason)
   monitor.c(1,errStartLine+1)
   monitor.write("WARNING")
   monitor.c(1,errStartLine+2)
-  monitor.write("This shop has stopped listening for Krist events")
+  monitor.write("This shop has stopped listening for Kromer events")
   monitor.c(1,errStartLine+3)
   monitor.write("Please report this to the shop owner/github")
   monitor.c(1,errStartLine+4)
@@ -204,13 +205,18 @@ local function showErr(errorReason)
 
 end
 
+
 local ok, err = pcall(parallel.waitForAny,
 krist.start,
 function ()
   while true do
     local event, to, from, value, transaction = os.pullEvent()
     if event == "krist_transaction" then
+      if transaction.sent_metaname and transaction.sent_name then
+        to = transaction.sent_metaname .. "@".. transaction.sent_name..".kro"
+      end
       local listing = listingAddressLUT[to]
+
       if listing then
         local stat, err = pcall(handlePurchase,listing, from, transaction)
         if not stat then
