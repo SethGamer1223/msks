@@ -323,22 +323,15 @@ function ()
       drawMonitor()
     elseif event == "redstone" and config.redstoneTriggersStockCalculations then
       invCache.refreshStorage(true)
-      -- sendShopsync() -- we dont send shopsync here, because this is broken and the flasher lamp triggers this every time it flashes, maybe consider fixing later
+      sendShopsync()
       drawMonitor()
     end
-  end
-end, function ()
-  while true do
-    rs.setOutput("left",true)
-    os.sleep(1)
-    rs.setOutput("left",false)
-    os.sleep(1)
   end
 end, function()
   sleep(5)
   while true do
     sendShopsync()
-    sleep(60) -- this isnt according to the spec, however i believe it makes sense
+    sleep(5 * 60) -- this isnt according to the spec, however i believe it makes sense
   end
 end)
 
